@@ -8,8 +8,7 @@ steps:
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
     deploymentScope: 'Resource Group'
-    ConnectedServiceName: 'OSS-Dev'
-    subscriptionName: '487da4a3-154c-4862-8bf3-d4bf6a3d6905'
+    azureSubscription: 'OSS-Test'
     action: 'Create Or Update Resource Group'
     resourceGroupName: 'val-oss-$(Build.BuildNumber)'
     location: 'West US 2'
@@ -33,8 +32,7 @@ steps:
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
     deploymentScope: 'Resource Group'
-    ConnectedServiceName: 'OSS-Dev'
-    subscriptionName: '487da4a3-154c-4862-8bf3-d4bf6a3d6905'
+    azureSubscription: 'OSS-Test'
     action: 'DeleteRG'
     resourceGroupName: 'val-oss-$(Build.BuildNumber)'
     location: 'West US 2'
