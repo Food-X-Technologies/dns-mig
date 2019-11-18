@@ -10,16 +10,23 @@
         },
         "env": {
             "type": "string",
-            "defaultValue": "unknown",
+            "defaultValue": "dev",
             "metadata": {
-                "description": "environment"
+                "description": "Environment being deployed into."
             }
         },
         "build": {
             "type": "string",
             "defaultValue": "unknown",
             "metadata": {
-                "description": "build number"
+                "description": "Build number for tracking changesets."
+            }
+        },
+        "release": {
+            "type": "int",
+            "defaultValue": 0,
+            "metadata": {
+                "description": "Release number from build server."
             }
         }
     },
@@ -27,7 +34,8 @@
         "location": "[resourceGroup().location]",
         "storageAccountName": "[parameters('storage')]",
         "environment": "[parameters('env')]",
-        "buildNumber": "[parameters('build')]"
+        "buildNumber": "[parameters('build')]",
+        "releaseNumber": "[parameters('release')]"
     },
     "resources": [
         {
@@ -61,7 +69,8 @@
                 }
             ],
             "tags": {
-                "release": "[variables('buildNumber')]",
+                "release": "[variables('releaseNumber')]",
+                "build": "[variables('buildNumber')]",
                 "environment": "[variables('environment')]",
                 "company": "food-x technologies",
                 "open-source": "oss"
