@@ -30,9 +30,10 @@ steps:
     publishLocation: 'Container'
 
 - task: AzureResourceManagerTemplateDeployment@3
+  displayName: Delete Resource Group
+  condition: always()
   inputs:
     deploymentScope: 'Resource Group'
     ConnectedServiceName: 'dev'
     action: 'DeleteRG'
     resourceGroupName: 'val-oss-$(Build.BuildNumber)'
-    condition: always()
