@@ -1,29 +1,37 @@
 trigger:
 - master
+- hotfix/*
+- feature/*
 
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  location: 'West US 2'
+
 steps:
 - task: AzureResourceManagerTemplateDeployment@3
+  displayName: Validate Static Site
   inputs:
     deploymentScope: 'Resource Group'
     ConnectedServiceName: 'dev'
     action: 'Create Or Update Resource Group'
     resourceGroupName: 'val-oss-$(Build.BuildNumber)'
-    location: 'West US 2'
+    location: $(location)
     templateLocation: 'Linked artifact'
     csmFile: 'azuredeploy.json'
     overrideParameters: '-storage valdnsfoodxtool'
     deploymentMode: 'Validation'
 
 - task: CopyFiles@2
+  displayName: Copy Artifacts
   inputs:
     SourceFolder: '.'
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
     
 - task: PublishBuildArtifacts@1
+  displayName: Publish Artifact
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
@@ -35,5 +43,6 @@ steps:
   inputs:
     deploymentScope: 'Resource Group'
     ConnectedServiceName: 'dev'
+    location: $(location)
     action: 'DeleteRG'
     resourceGroupName: 'val-oss-$(Build.BuildNumber)'
