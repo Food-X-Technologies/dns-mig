@@ -35,5 +35,4 @@ steps:
     ConnectedServiceName: 'dev'
     action: 'DeleteRG'
     resourceGroupName: 'val-oss-$(Build.BuildNumber)'
-    location: 'West US 2'
     condition: always()
